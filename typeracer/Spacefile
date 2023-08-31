@@ -1,0 +1,9 @@
+# Spacefile Docs: https://go.deta.dev/docs/spacefile/v0
+v: 0
+micros:
+  - name: typeracer
+    src: .
+    engine: svelte-kit
+    primary: true
+    public_routes:
+      - '/*'
