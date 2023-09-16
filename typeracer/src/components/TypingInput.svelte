@@ -9,6 +9,7 @@
 	let elapsedTime = 0;
 	let wpm = 0;
 	let accuracy = 0;
+	let showResults = false;
 
 	const startTimer = () => {
 		if (startTime === null) {
@@ -22,9 +23,15 @@
 		}
 	};
 
+	const finishTest = () => {
+		showResults = true;
+	};
+
 	const checkInput = () => {
 		startTimer();
-		if (
+		if (currentWordIndex >= words.length) {
+			finishTest();
+		} else if (
 			userInput === words[currentWordIndex] + ' ' ||
 			(userInput === words[currentWordIndex] && currentWordIndex === words.length - 1)
 		) {
@@ -61,6 +68,15 @@
 	<header class="text-center">
 		<h1 class="text-4xl mb-4">TypeRacer</h1>
 	</header>
+
+	<div class="container mx-auto p-4">
+		{#if showResults}
+			<p>Words Per Minute (WPM): {wpm}</p>
+			<p>Errors: {errors}</p>
+			<p>Accuracy: {accuracy}</p>
+			<p>Elapsed Time: {elapsedTime}</p>
+		{/if}
+	</div>
 
 	<section class="mt-8">
 		<p class="text-xl">
