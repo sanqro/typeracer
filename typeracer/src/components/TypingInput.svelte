@@ -8,6 +8,7 @@
 	let startTime: number | null = null;
 	let elapsedTime = 0;
 	let wpm = 0;
+	let accuracy = 0;
 
 	const startTimer = () => {
 		if (startTime === null) {
@@ -16,6 +17,7 @@
 				elapsedTime = Math.floor((new Date().getTime() - startTime!) / 1000);
 				if (currentWordIndex >= words.length) clearInterval(interval);
 				wpm = calculateWPM(correctChars, elapsedTime);
+				accuracy = calculateAccuracy(correctChars, errors);
 			}, 1000);
 		}
 	};
@@ -39,6 +41,20 @@
 		const wordsTyped = charsTyped / averageWordLength;
 		return Math.floor((wordsTyped / timeElapsed) * 60);
 	};
+
+	const calculateAccuracy = (correctChars: number, errors: number): number => {
+		if (errors === 0) return 100;
+
+		const accuracy = (correctChars / (correctChars + errors)) * 100;
+
+		if (accuracy < 1) {
+			return 1;
+		} else if (accuracy > 100) {
+			return 100;
+		} else {
+			return Math.floor(accuracy);
+		}
+	};
 </script>
 
 <div class="container mx-auto p-4">
@@ -58,9 +74,10 @@
 			placeholder="Start typing here..."
 		/>
 		{#if currentWordIndex < words.length}
-		<p>Elapsed Time: {elapsedTime} seconds</p>
-		<p>Words Per Minute: {wpm}</p>
-		<p>Errors: {errors}</p>
+			<p>Elapsed Time: {elapsedTime} seconds</p>
+			<p>Words Per Minute: {wpm}</p>
+			<p>Errors: {errors}</p>
+			<p>Accuracy: {accuracy}%</p>
 		{/if}
 	</section>
 </div>
