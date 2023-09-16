@@ -27,6 +27,7 @@
 	const startTimer = () => {
 		if (startTime === null && !showResults) {
 			startTime = new Date().getTime();
+			awaitTestEnd();
 			const interval = setInterval(() => {
 				if (!showResults) {
 					elapsedTime = Math.floor((new Date().getTime() - startTime!) / 1000);
@@ -41,6 +42,15 @@
 
 	const finishTest = () => {
 		showResults = true;
+	};
+
+	const awaitTestEnd = () => {
+		if (currentWordIndex >= wordsCountAsNumber || elapsedTime >= durationAsNumber) {
+			finishTest();
+		} else {
+			console.log('hi');
+			setTimeout(awaitTestEnd, 0);
+		}
 	};
 
 	const checkTest = () => {
