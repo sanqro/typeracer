@@ -1,4 +1,4 @@
-name: Deploy to Deta
+name: Deploy to deta
 
 on:
   pull_request:
@@ -6,21 +6,15 @@ on:
       - master
 
 jobs:
-  deploy:
-    name: Deploy to Deta
+  push-to-space:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-
-    - name: Change Directory
-      run: cd typeracer/ && ls
-
-    - name: Deploy
-      uses: lizheming/deta-action@master
-      with:
-        dir: typeracer
-        access_token: ${{ secrets.space_access_token }}
-        id: ${{ secrets.space_id }}
-        version: "1.0.0"
-        listed: false
+      - uses: actions/checkout@v3
+      - name: Deploy to Deta
+        uses: neobrains/space-deployment-github-action@v0.5
+        with:
+          access_token: ${{ secrets.SPACE_ACCESS_TOKEN }}
+          project_id: ${{ secrets.SPACE_ID }}
+          project_directory: typeracer
+          space_push: true
+          list_on_discovery: false
