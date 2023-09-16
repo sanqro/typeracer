@@ -1,18 +1,17 @@
-<script>
-	if (localStorage.getItem('wordsCount') === null || localStorage.getItem('duration') === null) {
-		localStorage.setItem('wordsCount', '10');
-		localStorage.setItem('duration', '15');
-	}
-
-	let wordsCount = localStorage.getItem('wordsCount') || '10';
-	let duration = localStorage.getItem('duration') || '15';
+<script lang="ts">
+	import { updateWordsCount, updateDuration, wordsCount, duration } from '../store/settingsStore';
+	import { onMount } from 'svelte';
 
 	const handleWordsCountChange = () => {
-		localStorage.setItem('wordsCount', wordsCount);
+		if ($wordsCount !== undefined) {
+			updateWordsCount($wordsCount);
+		}
 	};
 
 	const handleDurationChange = () => {
-		localStorage.setItem('duration', duration);
+		if ($duration !== undefined) {
+			updateDuration($duration);
+		}
 	};
 </script>
 
@@ -23,7 +22,7 @@
 			<label for="wordsCount" class="block text-gray-700">Number of Words:</label>
 			<select
 				id="wordsCount"
-				bind:value={wordsCount}
+				bind:value={$wordsCount}
 				on:change={handleWordsCountChange}
 				class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
 			>
@@ -40,7 +39,7 @@
 			>
 			<select
 				id="duration"
-				bind:value={duration}
+				bind:value={$duration}
 				on:change={handleDurationChange}
 				class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
 			>
