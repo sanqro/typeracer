@@ -58,9 +58,7 @@
 	const checkInput = () => {
 		startTimer();
 		checkTest();
-		if (currentWordIndex >= wordsCountAsNumber || elapsedTime >= durationAsNumber) {
-			finishTest();
-		} else if (
+		if (
 			userInput === words[currentWordIndex] + ' ' ||
 			(userInput === words[currentWordIndex] && currentWordIndex === words.length - 1)
 		) {
