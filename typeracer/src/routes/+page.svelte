@@ -1,5 +1,8 @@
 <script>
 	import '../app.css';
+	import TypingInput from '../components/TypingInput.svelte';
 </script>
 
-<h1 class="text-3xl font-bold">Typeracer!</h1>
+<div class="p-4">
+	<TypingInput />
+</div>
