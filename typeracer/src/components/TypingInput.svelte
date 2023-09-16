@@ -1,6 +1,7 @@
 <script lang="ts">
 	import words from '../lib/words.json';
 	import Results from './Results.svelte';
+	import { wordsCount, duration, testType } from '../store/settingsStore';
 
 	let currentWordIndex = 0;
 	let userInput = '';
@@ -11,15 +12,20 @@
 	let wpm = 0;
 	let accuracy = 0;
 	let showResults = false;
+	let wordsCountAsNumber = parseInt($wordsCount);
+	let durationAsNumber = parseInt($duration);
 
 	const startTimer = () => {
-		if (startTime === null) {
+		if (startTime === null && !showResults) {
 			startTime = new Date().getTime();
 			const interval = setInterval(() => {
-				elapsedTime = Math.floor((new Date().getTime() - startTime!) / 1000);
-				if (currentWordIndex >= words.length) clearInterval(interval);
-				wpm = calculateWPM(correctChars, elapsedTime);
-				accuracy = calculateAccuracy(correctChars, errors);
+				if (!showResults) {
+					elapsedTime = Math.floor((new Date().getTime() - startTime!) / 1000);
+					wpm = calculateWPM(correctChars, elapsedTime);
+					accuracy = calculateAccuracy(correctChars, errors);
+				} else {
+					return 0;
+				}
 			}, 1000);
 		}
 	};
@@ -28,9 +34,22 @@
 		showResults = true;
 	};
 
+	const checkTest = () => {
+		if ($testType == 'words') {
+			if (currentWordIndex >= wordsCountAsNumber) {
+				finishTest();
+			}
+		} else if ($testType == 'time') {
+			if (elapsedTime >= durationAsNumber) {
+				finishTest();
+			}
+		}
+	};
+
 	const checkInput = () => {
 		startTimer();
-		if (currentWordIndex >= words.length) {
+		checkTest();
+		if (currentWordIndex >= wordsCountAsNumber || elapsedTime >= durationAsNumber) {
 			finishTest();
 		} else if (
 			userInput === words[currentWordIndex] + ' ' ||
@@ -88,11 +107,15 @@
 				on:input={checkInput}
 				placeholder="Start typing here..."
 			/>
-			{#if currentWordIndex < words.length}
-				<p>Elapsed Time: {elapsedTime} seconds</p>
-				<p>Words Per Minute: {wpm}</p>
-				<p>Errors: {errors}</p>
-				<p>Accuracy: {accuracy}%</p>
+			<p>Elapsed Time: {elapsedTime} seconds</p>
+			<p>Words Per Minute: {wpm}</p>
+			<p>Errors: {errors}</p>
+			<p>Accuracy: {accuracy}%</p>
+
+			{#if $testType == 'words'}
+				<p>Remaning words: {wordsCountAsNumber - currentWordIndex}</p>
+			{:else if $testType == 'time'}
+				<p>Remaning time: {durationAsNumber - elapsedTime}</p>
 			{/if}
 		</section>
 	{/if}
