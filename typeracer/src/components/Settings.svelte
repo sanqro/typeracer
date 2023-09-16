@@ -3,9 +3,19 @@
 		updateWordsCount,
 		updateDuration,
 		updateTestType,
+		updateShowRemaining,
+		updateShowElapsedTime,
+		updateShowErrors,
+		updateShowAccuracy,
+		updateShowWpm,
 		wordsCount,
 		duration,
-		testType
+		testType,
+		showRemaining,
+		showElapsedTime,
+		showErrors,
+		showAccuracy,
+		showWpm
 	} from '../store/settingsStore';
 
 	const handleWordsCountChange = () => {
@@ -19,10 +29,35 @@
 			updateDuration($duration);
 		}
 	};
-
-	const handeTestTypeChange = () => {
+	const handleTestTypeChange = () => {
 		if ($testType !== undefined) {
 			updateTestType($testType);
+		}
+	};
+
+	const handleShowRemainingChange = () => {
+		if ($showRemaining !== undefined) {
+			updateShowRemaining($showRemaining);
+		}
+	};
+	const handleShowElapsedTimeChange = () => {
+		if ($showElapsedTime !== undefined) {
+			updateShowElapsedTime($showElapsedTime);
+		}
+	};
+	const handleShowErrorsChange = () => {
+		if ($showErrors !== undefined) {
+			updateShowErrors($showErrors);
+		}
+	};
+	const handleShowAccuracyChange = () => {
+		if ($showAccuracy !== undefined) {
+			updateShowAccuracy($showAccuracy);
+		}
+	};
+	const handleShowWpmChange = () => {
+		if ($showWpm !== undefined) {
+			updateShowWpm($showWpm);
 		}
 	};
 </script>
@@ -69,11 +104,75 @@
 			<select
 				id="testType"
 				bind:value={$testType}
-				on:change={handeTestTypeChange}
+				on:change={handleTestTypeChange}
 				class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
 			>
 				<option value="words">Number of Words</option>
 				<option value="time">Time</option>
+			</select>
+		</div>
+		<div class="mb-4">
+			{#if $testType == 'words'}
+				<label for="showRemaining" class="block text-gray-700">Show remaining words</label>
+			{:else if $testType == 'time'}
+				<label for="showRemaining" class="block text-gray-700">Show remaining time</label>
+			{/if}
+			<select
+				id="showRemaining"
+				bind:value={$showRemaining}
+				on:change={handleShowRemainingChange}
+				class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+			>
+				<option value="true">True</option>
+				<option value="false">False</option>
+			</select>
+		</div>
+		<div class="mb-4">
+			<label for="showElapsedTime" class="block text-gray-700">Show elapsed time</label>
+			<select
+				id="showElapsedTime"
+				bind:value={$showElapsedTime}
+				on:change={handleShowElapsedTimeChange}
+				class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+			>
+				<option value="true">True</option>
+				<option value="false">False</option>
+			</select>
+		</div>
+		<div class="mb-4">
+			<label for="showErrors" class="block text-gray-700">Show errors</label>
+			<select
+				id="showErrors"
+				bind:value={$showErrors}
+				on:change={handleShowErrorsChange}
+				class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+			>
+				<option value="true">True</option>
+				<option value="false">False</option>
+			</select>
+		</div>
+		<div class="mb-4">
+			<label for="showAccuracy" class="block text-gray-700">Show accuracy</label>
+			<select
+				id="showAccuracy"
+				bind:value={$showAccuracy}
+				on:change={handleShowAccuracyChange}
+				class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+			>
+				<option value="true">True</option>
+				<option value="false">False</option>
+			</select>
+		</div>
+		<div class="mb-4">
+			<label for="showWpm" class="block text-gray-700">Show words per minute</label>
+			<select
+				id="showWpm"
+				bind:value={$showWpm}
+				on:change={handleShowWpmChange}
+				class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+			>
+				<option value="true">True</option>
+				<option value="false">False</option>
 			</select>
 		</div>
 	</form>
