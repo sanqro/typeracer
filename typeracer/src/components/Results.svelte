@@ -22,5 +22,5 @@
 	<p>Words Per Minute (WPM): {wpm}</p>
 	<p>Errors: {errors}</p>
 	<p>Accuracy: {accuracy}</p>
-	<p>Elapsed Time: {elapsedTime}</p>
+	<p>Elapsed Time: {elapsedTime} seconds</p>
 </div>
