@@ -1,5 +1,6 @@
 <script lang="ts">
 	import words from '../lib/words.json';
+	import Results from './Results.svelte';
 
 	let currentWordIndex = 0;
 	let userInput = '';
@@ -71,29 +72,28 @@
 
 	<div class="container mx-auto p-4">
 		{#if showResults}
-			<p>Words Per Minute (WPM): {wpm}</p>
-			<p>Errors: {errors}</p>
-			<p>Accuracy: {accuracy}</p>
-			<p>Elapsed Time: {elapsedTime}</p>
+			<Results {wpm} {errors} {accuracy} {elapsedTime} />
 		{/if}
 	</div>
 
-	<section class="mt-8">
-		<p class="text-xl">
-			Type the word: <span class="font-bold">{words[currentWordIndex]}</span>
-		</p>
-		<input
-			class="mt-4 p-2 border rounded w-full"
-			type="text"
-			bind:value={userInput}
-			on:input={checkInput}
-			placeholder="Start typing here..."
-		/>
-		{#if currentWordIndex < words.length}
-			<p>Elapsed Time: {elapsedTime} seconds</p>
-			<p>Words Per Minute: {wpm}</p>
-			<p>Errors: {errors}</p>
-			<p>Accuracy: {accuracy}%</p>
-		{/if}
-	</section>
+	{#if !showResults}
+		<section class="mt-8">
+			<p class="text-xl">
+				Type the word: <span class="font-bold">{words[currentWordIndex]}</span>
+			</p>
+			<input
+				class="mt-4 p-2 border rounded w-full"
+				type="text"
+				bind:value={userInput}
+				on:input={checkInput}
+				placeholder="Start typing here..."
+			/>
+			{#if currentWordIndex < words.length}
+				<p>Elapsed Time: {elapsedTime} seconds</p>
+				<p>Words Per Minute: {wpm}</p>
+				<p>Errors: {errors}</p>
+				<p>Accuracy: {accuracy}%</p>
+			{/if}
+		</section>
+	{/if}
 </div>
