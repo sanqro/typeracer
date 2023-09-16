@@ -1,7 +1,15 @@
 <script lang="ts">
 	import words from '../lib/words.json';
 	import Results from './Results.svelte';
-	import { wordsCount, duration, testType } from '../store/settingsStore';
+	import {
+		wordsCount,
+		duration,
+		testType,
+		showElapsedTime,
+		showAccuracy,
+		showErrors,
+		showWpm
+	} from '../store/settingsStore';
 
 	let currentWordIndex = 0;
 	let userInput = '';
@@ -107,10 +115,18 @@
 				on:input={checkInput}
 				placeholder="Start typing here..."
 			/>
-			<p>Elapsed Time: {elapsedTime} seconds</p>
-			<p>Words Per Minute: {wpm}</p>
-			<p>Errors: {errors}</p>
-			<p>Accuracy: {accuracy}%</p>
+			{#if $showElapsedTime == 'true'}
+				<p>Elapsed Time: {elapsedTime} seconds</p>
+			{/if}
+			{#if $showWpm == 'true'}
+				<p>Words Per Minute: {wpm}</p>
+			{/if}
+			{#if $showErrors == 'true'}
+				<p>Errors: {errors}</p>
+			{/if}
+			{#if $showAccuracy == 'true'}
+				<p>Accuracy: {accuracy}%</p>
+			{/if}
 
 			{#if $testType == 'words'}
 				<p>Remaning words: {wordsCountAsNumber - currentWordIndex}</p>
