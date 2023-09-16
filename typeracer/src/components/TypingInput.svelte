@@ -22,6 +22,7 @@
 	let showResults = false;
 	let wordsCountAsNumber = parseInt($wordsCount);
 	let durationAsNumber = parseInt($duration);
+	let changeColor = false;
 
 	const startTimer = () => {
 		if (startTime === null && !showResults) {
@@ -68,6 +69,7 @@
 			userInput = '';
 		} else if (!words[currentWordIndex].startsWith(userInput)) {
 			errors++;
+			changeColor = true;
 		}
 	};
 
@@ -106,7 +108,15 @@
 	{#if !showResults}
 		<section class="mt-8">
 			<p class="text-xl">
-				Type the word: <span class="font-bold">{words[currentWordIndex]}</span>
+				Type the word: <span class="text-black">
+					{#each words[currentWordIndex] as letter, index}
+						<span
+							class={changeColor && index < userInput.length && userInput[index] !== letter
+								? 'text-red-500'
+								: 'text-black'}>{letter}</span
+						>
+					{/each}
+				</span>
 			</p>
 			<input
 				class="mt-4 p-2 border rounded w-full"
