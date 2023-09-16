@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import words from '../lib/words.json';
 
 	let currentWordIndex = 0;
@@ -8,6 +7,7 @@
 	let errors = 0;
 	let startTime: number | null = null;
 	let elapsedTime = 0;
+	let wpm = 0;
 
 	const startTimer = () => {
 		if (startTime === null) {
@@ -15,6 +15,7 @@
 			const interval = setInterval(() => {
 				elapsedTime = Math.floor((new Date().getTime() - startTime!) / 1000);
 				if (currentWordIndex >= words.length) clearInterval(interval);
+				wpm = calculateWPM(correctChars, elapsedTime);
 			}, 1000);
 		}
 	};
@@ -33,10 +34,10 @@
 		}
 	};
 
-	const wpm = (): number => {
+	const calculateWPM = (charsTyped: number, timeElapsed: number): number => {
 		const averageWordLength = 5;
-		const wordsTyped = correctChars / averageWordLength;
-		return Math.floor((wordsTyped / elapsedTime) * 60);
+		const wordsTyped = charsTyped / averageWordLength;
+		return Math.floor((wordsTyped / timeElapsed) * 60);
 	};
 </script>
 
@@ -56,18 +57,10 @@
 			on:input={checkInput}
 			placeholder="Start typing here..."
 		/>
-	</section>
-
-	<section class="mt-8">
 		{#if currentWordIndex < words.length}
-			<p>Elapsed Time: {elapsedTime} seconds</p>
-			<p>Words Per Minute (WPM): {wpm()}</p>
-			<p>Errors: {errors}</p>
-		{:else}
-			<p>You have entered all the words!</p>
-			<p>End Time: {elapsedTime} seconds</p>
-			<p>Words Per Minute (WPM): {wpm()}</p>
-			<p>Errors: {errors}</p>
+		<p>Elapsed Time: {elapsedTime} seconds</p>
+		<p>Words Per Minute: {wpm}</p>
+		<p>Errors: {errors}</p>
 		{/if}
 	</section>
 </div>
