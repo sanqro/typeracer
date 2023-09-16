@@ -20,4 +20,4 @@ jobs:
         id: ${{ secrets.space_id }}
         version: "1.0.0"
         listed: false
-        dir: "./typeracer"
+        dir: "typeracer/"
