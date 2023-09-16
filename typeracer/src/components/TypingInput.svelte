@@ -45,12 +45,8 @@
 	};
 
 	const awaitTestEnd = () => {
-		if (currentWordIndex >= wordsCountAsNumber || elapsedTime >= durationAsNumber) {
-			finishTest();
-		} else {
-			console.log('hi');
-			setTimeout(awaitTestEnd, 0);
-		}
+		checkTest();
+		setTimeout(awaitTestEnd, 0);
 	};
 
 	const checkTest = () => {
