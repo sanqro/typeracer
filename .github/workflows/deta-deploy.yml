@@ -19,6 +19,7 @@ jobs:
     - name: Deploy
       uses: lizheming/deta-action@master
       with:
+        dir: typeracer
         access_token: ${{ secrets.space_access_token }}
         id: ${{ secrets.space_id }}
         version: "1.0.0"
