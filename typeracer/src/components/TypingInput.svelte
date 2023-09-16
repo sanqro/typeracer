@@ -24,6 +24,8 @@
 	let durationAsNumber = parseInt($duration);
 	let changeColor = false;
 
+	const wordsUnsorted = words as string[];
+	const sortedWords: string[] = wordsUnsorted.sort(() => Math.random() - 0.5);
 	const startTimer = () => {
 		if (startTime === null && !showResults) {
 			startTime = new Date().getTime();
@@ -65,13 +67,13 @@
 		startTimer();
 		checkTest();
 		if (
-			userInput === words[currentWordIndex] + ' ' ||
-			(userInput === words[currentWordIndex] && currentWordIndex === words.length - 1)
+			userInput === sortedWords[currentWordIndex] + ' ' ||
+			(userInput === sortedWords[currentWordIndex] && currentWordIndex === sortedWords.length - 1)
 		) {
 			correctChars += userInput.length;
 			currentWordIndex++;
 			userInput = '';
-		} else if (!words[currentWordIndex].startsWith(userInput)) {
+		} else if (!sortedWords[currentWordIndex].startsWith(userInput)) {
 			errors++;
 			changeColor = true;
 		}
@@ -113,7 +115,7 @@
 		<section class="mt-8">
 			<p class="text-xl">
 				Type the word: <span class="text-black">
-					{#each words[currentWordIndex] as letter, index}
+					{#each sortedWords[currentWordIndex] as letter, index}
 						<span
 							class={changeColor && index < userInput.length && userInput[index] !== letter
 								? 'text-red-500'
