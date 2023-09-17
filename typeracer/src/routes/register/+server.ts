@@ -18,7 +18,11 @@ export const POST = async ({ request }) => {
 		const passwordHash = crypto.SHA256(authFormData.password).toString(crypto.enc.Hex);
 
 		if (authFormData.password !== '' && authFormData.username !== '') {
-			auth.put({ username: authFormData.username, password: passwordHash });
+			const registerJsonData = {
+				key: authFormData.username,
+				passwordHash: passwordHash
+			};
+			auth.insert({ registerJsonData });
 			return json({ username: authFormData.username, success: true }, { status: 201 });
 		} else {
 			return json({ message: 'Invalid Credentials', success: false }, { status: 401 });
