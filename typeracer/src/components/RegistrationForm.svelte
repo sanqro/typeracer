@@ -34,6 +34,7 @@
 			<input type="password" placeholder="Password" id="password" bind:value={password} required />
 		</div>
 		<div>
+			<p>Already have an account? <a href="/login">Login here</a></p>
 			<button type="submit">Register</button>
 		</div>
 	</form>
