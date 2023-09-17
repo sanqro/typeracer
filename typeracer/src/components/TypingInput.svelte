@@ -23,49 +23,94 @@
 	let wordsCountAsNumber = parseInt($wordsCount);
 	let durationAsNumber = parseInt($duration);
 	let changeColor = false;
+	let awaitTimeout: any;
+	let interval: any;
 
 	const wordsUnsorted = words as string[];
 	const sortedWords: string[] = wordsUnsorted.sort(() => Math.random() - 0.5);
+
 	const startTimer = () => {
 		if (startTime === null && !showResults) {
 			startTime = new Date().getTime();
 			awaitTestEnd();
-			const interval = setInterval(() => {
+			interval = setInterval(() => {
 				if (!showResults) {
 					elapsedTime = Math.floor((new Date().getTime() - startTime!) / 1000);
 					wpm = calculateWPM(correctChars, elapsedTime);
 					accuracy = calculateAccuracy(correctChars, errors);
 				} else {
+					clearInterval(interval);
 					return 0;
 				}
 			}, 1000);
 		}
 	};
 
-	const finishTest = () => {
+	const finishTest = async () => {
+		const username = localStorage.getItem('username');
+		if (username) {
+			const response = await fetch('/scores', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					username: username,
+					elapsedTime: elapsedTime,
+					wpm: wpm,
+					errors: errors,
+					accuracy: accuracy,
+					testType: $testType
+				})
+			});
+			const res = await response.json();
+			if (res.success) {
+				console.log('Saved score successfully!');
+			} else {
+				alert(res.error);
+			}
+		}
 		showResults = true;
 	};
 
-	const awaitTestEnd = () => {
-		checkTest();
-		setTimeout(awaitTestEnd, 0);
+	const restartTest = () => {
+		currentWordIndex = 0;
+		userInput = '';
+		correctChars = 0;
+		errors = 0;
+		startTime = null;
+		elapsedTime = 0;
+		wpm = 0;
+		accuracy = 0;
+		showResults = false;
+		changeColor = false;
+		const wordsUnsorted = words as string[];
+		const sortedWords: string[] = wordsUnsorted.sort(() => Math.random() - 0.5);
+		stopTimer();
 	};
 
-	const checkTest = () => {
+	const stopTimer = () => {
+		clearInterval(interval);
+		startTime = null;
+	};
+
+	const awaitTestEnd = () => {
 		if ($testType == 'words') {
 			if (currentWordIndex >= wordsCountAsNumber) {
 				finishTest();
+				return 0;
 			}
 		} else if ($testType == 'time') {
 			if (elapsedTime >= durationAsNumber) {
 				finishTest();
+				return 0;
 			}
 		}
+		awaitTimeout = setTimeout(awaitTestEnd, 0);
 	};
 
 	const checkInput = () => {
 		startTimer();
-		checkTest();
 		if (
 			userInput === sortedWords[currentWordIndex] + ' ' ||
 			(userInput === sortedWords[currentWordIndex] && currentWordIndex === sortedWords.length - 1)
@@ -143,12 +188,16 @@
 			{#if $showAccuracy == 'true'}
 				<p>Accuracy: {accuracy}%</p>
 			{/if}
-
 			{#if $testType == 'words'}
 				<p>Remaning words: {wordsCountAsNumber - currentWordIndex}</p>
 			{:else if $testType == 'time'}
 				<p>Remaning time: {durationAsNumber - elapsedTime}</p>
 			{/if}
 		</section>
+	{/if}
+	{#if showResults}
+		<button on:click={restartTest} class="mt-4 p-2 bg-blue-500 text-white rounded"
+			>Restart Test</button
+		>
 	{/if}
 </div>
