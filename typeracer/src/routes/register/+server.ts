@@ -12,14 +12,14 @@ export const POST = async ({ request }) => {
 		const authFormData: IRegisterForm = (await request.json()) as IRegisterForm;
 		const user = await auth.get(authFormData.username);
 		if (user !== null) {
-			throw new Error('User not found');
+			throw new Error('User already exists');
 		}
 
 		const passwordHash = crypto.SHA256(authFormData.password).toString(crypto.enc.Hex);
 
 		if (authFormData.password !== '' && authFormData.username !== '') {
 			auth.put({ username: authFormData.username, password: passwordHash });
-			return json({ token: token, success: true }, { status: 201 });
+			return json({ username: authFormData.username, success: true }, { status: 201 });
 		} else {
 			return json({ message: 'Invalid Credentials', success: false }, { status: 401 });
 		}
