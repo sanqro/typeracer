@@ -174,6 +174,10 @@
 								: 'text-black'}>{letter}</span
 						>
 					{/each}
+					{#each sortedWords.slice(currentWordIndex + 1, currentWordIndex + 10) as nextWord}
+						<span class="text-black">{nextWord}</span>
+						<span class="ml-1" />
+					{/each}
 				</span>
 			</p>
 			<input
