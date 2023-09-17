@@ -17,31 +17,31 @@
 	});
 </script>
 
-<main>
+<main class="p-6">
 	{#if scoreboardData && scoreboardData.length > 0}
-		<table>
-			<thead>
+		<table class="min-w-full bg-white rounded-lg shadow-md overflow-hidden">
+			<thead class="bg-black text-white">
 				<tr>
-					<th>Rank</th>
-					<th>Username</th>
-					<th>Accuracy</th>
-					<th>WPM</th>
+					<th class="px-4 py-2">Rank</th>
+					<th class="px-4 py-2">Username</th>
+					<th class="px-4 py-2">Accuracy</th>
+					<th class="px-4 py-2">WPM</th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody class="divide-y divide-gray-300">
 				{#each scoreboardData as player}
 					<tr>
-						<td>{player.rank}</td>
-						<td>{player.username}</td>
-						<td>{player.accuracy}</td>
-						<td>{player.wpm}</td>
+						<td class="px-4 py-2">{player.rank}</td>
+						<td class="px-4 py-2">{player.username}</td>
+						<td class="px-4 py-2">{player.accuracy}</td>
+						<td class="px-4 py-2">{player.wpm}</td>
 					</tr>
 				{/each}
 			</tbody>
 		</table>
 	{:else}
-		<div class="p-4">
-			<p>No data available yet.</p>
+		<div class="bg-white p-4 rounded-lg shadow-md">
+			<p class="text-center text-gray-600">No data available yet.</p>
 		</div>
 	{/if}
 </main>
