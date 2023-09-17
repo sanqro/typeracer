@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import TestDevelopmentChart from './TestDevelopmentChart.svelte';
 
 	let userScores: any[] = [];
 	let averageWPM: number | null = null;
@@ -60,5 +61,6 @@
 				</div>
 			{/if}
 		</div>
+		<TestDevelopmentChart />
 	{/if}
 </main>
