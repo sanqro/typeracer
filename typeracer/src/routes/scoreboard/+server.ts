@@ -26,14 +26,14 @@ export const GET = async ({ request }) => {
 			}
 
 			scores.forEach((score: any) => {
-				if (score.accuracy > userScores[username].accuracy) {
+				if (score.wpm > userScores[username].wpm) {
 					userScores[username].accuracy = score.accuracy;
 					userScores[username].wpm = score.wpm;
 				} else if (
-					score.accuracy === userScores[username].accuracy &&
-					score.wpm > userScores[username].wpm
+					score.wpm === userScores[username].wpm &&
+					score.accuracy > userScores[username].accuracy
 				) {
-					userScores[username].wpm = score.wpm;
+					userScores[username].accuracy = score.accuracy;
 				}
 			});
 		});
