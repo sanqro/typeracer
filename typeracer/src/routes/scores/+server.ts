@@ -22,9 +22,13 @@ const checkAuth = async (jwt: string, username: string) => {
 
 export const POST = async ({ request }) => {
 	try {
+		const jwtAsString = request.headers.get('authorization') as string;
 		const newScore = (await request.json()) as ITypingTestScore;
-
 		const username = newScore.username;
+
+		if ((await checkAuth(jwtAsString, username)) == false) {
+			throw new Error('Not authorized');
+		}
 		let existing = await scoresDB.get(username);
 
 		if (existing == null) {
