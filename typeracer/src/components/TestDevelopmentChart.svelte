@@ -12,18 +12,22 @@
 
 	async function fetchData() {
 		try {
-			const username = localStorage.getItem('username');
-			const response = await fetch('/scores?username=' + username, {
-				method: 'GET',
-				headers: {
-					'Content-Type': 'application/json'
+			const username = localStorage.getItem('username') as string;
+			const token = localStorage.getItem('token') as string;
+			if (username && token) {
+				const response = await fetch('/scores?username=' + username, {
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json',
+						Authorization: token
+					}
+				});
+				const data = await response.json();
+				console.log(data);
+				if (data && data.length > 0) {
+					chartData = data;
+					updateChart();
 				}
-			});
-			const data = await response.json();
-			console.log(data);
-			if (data && data.length > 0) {
-				chartData = data;
-				updateChart();
 			}
 		} catch (error) {
 			console.error('Error fetching data:', error);
