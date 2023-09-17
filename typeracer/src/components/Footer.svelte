@@ -1,5 +1,5 @@
-<footer class="bg-gray-800 text-white py-4">
-	<div class="container mx-auto text-center">
+<footer class="text-white py-4 fixed bottom-0 w-full">
+	<div class="container mx-auto text-center mb-auto">
 		<p>
 			<a
 				href="https://github.com/sanqro/typeracer"

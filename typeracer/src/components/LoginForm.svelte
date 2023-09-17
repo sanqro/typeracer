@@ -26,9 +26,9 @@
 	};
 </script>
 
-<div class="w-full h-[80vh] flex items-center justify-center bg-gray-100">
+<div class="w-full h-[80vh] flex items-center justify-center">
 	<div class="w-70 max-w-md">
-		<h1 class="text-2xl font-bold mb-4">Login</h1>
+		<h1 class="text-2xl font-bold mb-4 text-center">Login</h1>
 		<form on:submit={login} class="space-y-4">
 			<div class="flex flex-col">
 				<label for="username" class="mb-2 font-medium">Username</label>
@@ -60,8 +60,8 @@
 				</p>
 				<button
 					type="submit"
-					class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
-					>Login</button
+					class="bg-none text-white text-lg font-semibold hover:text-blue-300
+				text-white text-lg font-semibold hover:text-blue-300">Login</button
 				>
 			</div>
 		</form>

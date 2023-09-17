@@ -15,7 +15,7 @@
 	};
 </script>
 
-<nav class="bg-blue-500 p-4">
+<nav class="p-4">
 	<div class="container mx-auto flex justify-between items-center">
 		<div class="flex space-x-4">
 			{#if window.location.pathname !== '/'}

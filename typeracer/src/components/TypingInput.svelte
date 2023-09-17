@@ -1,6 +1,7 @@
 <script lang="ts">
 	import words from '../lib/words.json';
 	import Results from './Results.svelte';
+
 	import {
 		wordsCount,
 		duration,
@@ -152,9 +153,13 @@
 		<h1 class="text-4xl mb-4">TypeRacer</h1>
 	</header>
 
-	<div class="container mx-auto p-4">
+	<div class="container mx-auto p-4 flex flex-col items-center">
 		{#if showResults}
 			<Results {wpm} {errors} {accuracy} {elapsedTime} />
+			<button
+				on:click={restartTest}
+				class="bg-black text-white px-4 py-2 rounded-md hover:bg-gray-800">Restart Test</button
+			>
 		{/if}
 	</div>
 
@@ -168,6 +173,10 @@
 								? 'text-red-500'
 								: 'text-black'}>{letter}</span
 						>
+					{/each}
+					{#each sortedWords.slice(currentWordIndex + 1, currentWordIndex + 10) as nextWord}
+						<span class="text-black">{nextWord}</span>
+						<span class="ml-1" />
 					{/each}
 				</span>
 			</p>
@@ -196,10 +205,5 @@
 				<p>Remaning time: {durationAsNumber - elapsedTime}</p>
 			{/if}
 		</section>
-	{/if}
-	{#if showResults}
-		<button on:click={restartTest} class="mt-4 p-2 bg-blue-500 text-white rounded"
-			>Restart Test</button
-		>
 	{/if}
 </div>
