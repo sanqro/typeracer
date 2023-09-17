@@ -23,6 +23,7 @@
 	let wordsCountAsNumber = parseInt($wordsCount);
 	let durationAsNumber = parseInt($duration);
 	let changeColor = false;
+	let awaitTimeout: any;
 
 	const wordsUnsorted = words as string[];
 	const sortedWords: string[] = wordsUnsorted.sort(() => Math.random() - 0.5);
@@ -47,25 +48,22 @@
 	};
 
 	const awaitTestEnd = () => {
-		checkTest();
-		setTimeout(awaitTestEnd, 0);
-	};
-
-	const checkTest = () => {
 		if ($testType == 'words') {
 			if (currentWordIndex >= wordsCountAsNumber) {
 				finishTest();
+				return 0;
 			}
 		} else if ($testType == 'time') {
 			if (elapsedTime >= durationAsNumber) {
 				finishTest();
+				return 0;
 			}
 		}
+		awaitTimeout = setTimeout(awaitTestEnd, 0);
 	};
 
 	const checkInput = () => {
 		startTimer();
-		checkTest();
 		if (
 			userInput === sortedWords[currentWordIndex] + ' ' ||
 			(userInput === sortedWords[currentWordIndex] && currentWordIndex === sortedWords.length - 1)
@@ -143,7 +141,6 @@
 			{#if $showAccuracy == 'true'}
 				<p>Accuracy: {accuracy}%</p>
 			{/if}
-
 			{#if $testType == 'words'}
 				<p>Remaning words: {wordsCountAsNumber - currentWordIndex}</p>
 			{:else if $testType == 'time'}
