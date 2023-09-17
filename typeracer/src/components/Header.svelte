@@ -7,6 +7,12 @@
 	if (token && username) {
 		isLoggedIn = true;
 	}
+
+	const logout = () => {
+		localStorage.removeItem('token');
+		localStorage.removeItem('username');
+		isLoggedIn = false;
+	};
 </script>
 
 <nav class="bg-blue-500 p-4">
@@ -27,9 +33,12 @@
 		</div>
 
 		{#if isLoggedIn}
-			<div class="text-white">
+			<div class="flex space-x-4 items-center">
 				<a href="/profile" class="text-white text-lg font-semibold hover:text-blue-300"
 					>{username || null}</a
+				>
+				<button on:click={logout} class="text-white text-lg font-semibold hover:text-blue-300"
+					>Logout</button
 				>
 			</div>
 		{:else}
