@@ -73,7 +73,6 @@
 				alert(res.error);
 			}
 		}
-		showResults = true;
 	};
 
 	const restartTest = () => {
@@ -101,11 +100,13 @@
 		if ($testType == 'words') {
 			if (currentWordIndex >= wordsCountAsNumber) {
 				finishTest();
+				showResults = true;
 				return 0;
 			}
 		} else if ($testType == 'time') {
 			if (elapsedTime >= durationAsNumber) {
 				finishTest();
+				showResults = true;
 				return 0;
 			}
 		}
