@@ -41,7 +41,6 @@ export const POST = async ({ request }) => {
 		let existingScores: any[] = existing.value as any;
 		existingScores.push(newScore);
 
-		console.log(existingScores);
 		await scoresDB.put(existing, username);
 
 		return json({ message: 'Updated Scores', success: true }, { status: 201 });
