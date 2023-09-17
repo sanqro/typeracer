@@ -47,25 +47,31 @@
 	{#if userScores.length === 0}
 		<p>No Data Available</p>
 	{:else}
-		<div>
-			<h1>User Profile of {username}</h1>
-			<p>Total Tests: {userScores.length}</p>
-			<h1>Best Results:</h1>
-			<ul>
-				{#each userScores
-					.filter((score) => score.wpm > 0)
-					.sort((a, b) => b.wpm - a.wpm)
-					.slice(0, 3) as score, index}
-					Test {index + 1}: {score.wpm} WPM, {score.accuracy}% Accuracy
-				{/each}
-			</ul>
-			{#if averageWPM !== null && averageAccuracy !== null}
+		<div class="text-center text-white">
+			<h1 class="text-2xl font-bold">User Profile of {username}</h1>
+			<p class="text-lg">Total Tests: {userScores.length}</p>
+
+			<div style="display: flex; justify-content: space-between;">
+				{#if averageWPM !== null && averageAccuracy !== null}
+					<div>
+						<h1 class="text-2xl font-bold">Averages</h1>
+						<p class="text-lg">Average WPM: {averageWPM.toFixed(2)}</p>
+						<p class="text-lg">Average Accuracy: {averageAccuracy.toFixed(2)}%</p>
+					</div>
+				{/if}
+
 				<div>
-					<h1>Averages</h1>
-					<p>Average WPM: {averageWPM.toFixed(2)}</p>
-					<p>Average Accuracy: {averageAccuracy.toFixed(2)}%</p>
+					<h1 class="text-2xl font-bold">Best Results:</h1>
+					<ul>
+						{#each userScores
+							.filter((score) => score.wpm > 0)
+							.sort((a, b) => b.wpm - a.wpm)
+							.slice(0, 3) as score, index}
+							<li>Test {index + 1}: {score.wpm} WPM, {score.accuracy}% Accuracy</li>
+						{/each}
+					</ul>
 				</div>
-			{/if}
+			</div>
 		</div>
 		<TestDevelopmentChart />
 	{/if}
