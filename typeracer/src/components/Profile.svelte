@@ -41,7 +41,7 @@
 		<p>No Data Available</p>
 	{:else}
 		<div>
-			<h1>User Profile</h1>
+			<h1>User Profile of {username}</h1>
 			<p>Total Tests: {userScores.length}</p>
 			<h1>Best Results:</h1>
 			<ul>
