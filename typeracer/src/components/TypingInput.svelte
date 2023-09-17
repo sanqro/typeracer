@@ -47,12 +47,14 @@
 	};
 
 	const finishTest = async () => {
-		const username = localStorage.getItem('username');
-		if (username) {
+		const username = localStorage.getItem('username') as string;
+		const token = localStorage.getItem('token') as string;
+		if (username && token) {
 			const response = await fetch('/scores', {
 				method: 'POST',
 				headers: {
-					'Content-Type': 'application/json'
+					'Content-Type': 'application/json',
+					Authorization: token
 				},
 				body: JSON.stringify({
 					username: username,
