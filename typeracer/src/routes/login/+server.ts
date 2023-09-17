@@ -1,7 +1,8 @@
 import { DETA_PROJECT_KEY, JWT_SECRET } from '$env/static/private';
 import { Deta } from 'deta';
-import argon2 from 'argon2';
-import jwt from 'jsonwebtoken';
+import crypto from 'crypto-js';
+import { Buffer } from 'buffer/';
+import { createJWT } from '@sensethenlove/jwt';
 import type { ILoginForm } from './interfaces';
 import { json } from '@sveltejs/kit';
 
@@ -15,10 +16,14 @@ export const POST = async ({ request }) => {
 		if (user === null) {
 			throw new Error('User not found');
 		}
-		const password = user.password as string;
+		const storedHash = user.password as string;
 
-		if (await argon2.verify(password, authFormData.password)) {
-			const token = jwt.sign({ username: user.key }, JWT_SECRET, { expiresIn: '21600s' });
+		const passwordHash = crypto.SHA256(authFormData.password).toString(crypto.enc.Hex);
+
+		if (storedHash === passwordHash) {
+			const jwtPayload = { userId: 1 };
+			const expiresInAsSeconds = 32400;
+			const token = await createJWT(jwtPayload, expiresInAsSeconds, JWT_SECRET, Buffer);
 			return json({ token: token, success: true }, { status: 201 });
 		} else {
 			return json({ message: 'Invalid Credentials', success: false }, { status: 401 });

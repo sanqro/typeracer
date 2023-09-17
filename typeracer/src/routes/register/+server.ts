@@ -1,6 +1,5 @@
 import { DETA_PROJECT_KEY } from '$env/static/private';
 import { Deta } from 'deta';
-import argon2 from 'argon2';
 import type { IRegisterForm } from './interfaces';
 import { json } from '@sveltejs/kit';
 
@@ -16,7 +15,8 @@ export const POST = async ({ request }) => {
 			throw new Error('User already exists');
 		}
 
-		const passwordHash = await argon2.hash(authFormData.password);
+		const passwordHash = CryptoJS.SHA256(authFormData.password).toString(CryptoJS.enc.Hex);
+
 		const registerJsonData = {
 			key: authFormData.username,
 			password: passwordHash
