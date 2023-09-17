@@ -5,20 +5,24 @@
 	let userScores: any[] = [];
 	let averageWPM: number | null = null;
 	let averageAccuracy: number | null = null;
+	const username = localStorage.getItem('username') as string;
 
-	const username = localStorage.getItem('username');
 	onMount(async () => {
+		const token = localStorage.getItem('token') as string;
 		try {
-			const response = await fetch('/scores?username=' + username, {
-				method: 'GET',
-				headers: {
-					'Content-Type': 'application/json'
+			if (token && username) {
+				const response = await fetch('/scores?username=' + username, {
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json',
+						Authorization: token
+					}
+				});
+				const data = await response.json();
+				if (data && data.length > 0) {
+					userScores = data;
+					calculateAverages(data);
 				}
-			});
-			const data = await response.json();
-			if (data && data.length > 0) {
-				userScores = data;
-				calculateAverages(data);
 			}
 		} catch (error) {
 			console.error('Error fetching data:', error);
