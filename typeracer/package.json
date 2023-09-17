@@ -15,6 +15,7 @@
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/adapter-netlify": "^1.0.0-next.88",
 		"@sveltejs/kit": "^1.20.4",
+		"@types/crypto-js": "^4.1.2",
 		"@types/d3": "^7.4.0",
 		"@types/d3-array": "^3.0.7",
 		"@types/d3-scale": "^4.0.4",
@@ -38,7 +39,9 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"argon2": "^0.31.1",
+		"@sensethenlove/jwt": "^1.0.6",
+		"buffer": "^6.0.3",
+		"crypto-js": "^4.1.1",
 		"d3": "^7.8.5",
 		"deta": "^2.0.0",
 		"dotenv": "^16.3.1",
