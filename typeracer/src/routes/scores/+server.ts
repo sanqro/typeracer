@@ -52,12 +52,16 @@ export const POST = async ({ request }) => {
 
 export const GET = async ({ request, url }) => {
 	try {
-		const fetchedScores = await scoresDB.fetch();
-
 		const username = await url.searchParams.get('username');
 		if (username == null) {
 			throw new Error('Username not provided');
 		}
+		const jwtAsString = request.headers.get('authorization') as string;
+
+		if ((await checkAuth(jwtAsString, username)) == false) {
+			throw new Error('Not authorized');
+		}
+		const fetchedScores = await scoresDB.fetch();
 
 		const userScores = fetchedScores.items.find((item) => item.key === username).value;
 		if (userScores) {
