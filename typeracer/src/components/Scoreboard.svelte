@@ -30,7 +30,7 @@
 			</thead>
 			<tbody class="divide-y divide-gray-300">
 				{#each scoreboardData as player}
-					<tr>
+					<tr class="text-center">
 						<td class="px-4 py-2">{player.rank}</td>
 						<td class="px-4 py-2">{player.username}</td>
 						<td class="px-4 py-2">{player.accuracy}</td>
