@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
+
 	let username = '';
 	let password = '';
 
@@ -15,6 +17,7 @@
 			const res = await response.json();
 			if (res.success) {
 				alert('Registered successfully!');
+				goto('/login');
 			} else {
 				alert(res.error);
 			}
