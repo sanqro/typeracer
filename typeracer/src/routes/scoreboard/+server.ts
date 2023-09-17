@@ -3,8 +3,6 @@ import { Deta } from 'deta';
 import type { IScore } from './interfaces';
 import { json } from '@sveltejs/kit';
 
-export default DETA_PROJECT_KEY;
-
 const deta = Deta(DETA_PROJECT_KEY);
 const scoresDB = deta.Base('scores');
 
@@ -51,7 +49,7 @@ export const GET = async ({ request }) => {
 			score.rank = index + 1;
 		});
 
-		return json(sortedUserScores);
+		return json({ sortedUserScores }, { status: 200 });
 	} catch (err: any) {
 		return json({ error: err.message, success: false }, { status: 503 });
 	}
