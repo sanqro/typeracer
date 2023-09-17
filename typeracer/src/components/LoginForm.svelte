@@ -60,8 +60,8 @@
 				</p>
 				<button
 					type="submit"
-					class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
-					>Login</button
+					class="bg-none text-white text-lg font-semibold hover:text-blue-300
+				text-white text-lg font-semibold hover:text-blue-300">Login</button
 				>
 			</div>
 		</form>
