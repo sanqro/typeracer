@@ -2,6 +2,7 @@ import { DETA_PROJECT_KEY } from '$env/static/private';
 import { Deta } from 'deta';
 import type { IRegisterForm } from './interfaces';
 import { json } from '@sveltejs/kit';
+import crypto from 'crypto-js';
 
 const deta = Deta(DETA_PROJECT_KEY);
 const auth = deta.Base('users');
@@ -15,7 +16,7 @@ export const POST = async ({ request }) => {
 			throw new Error('User already exists');
 		}
 
-		const passwordHash = CryptoJS.SHA256(authFormData.password).toString(CryptoJS.enc.Hex);
+		const passwordHash = crypto.SHA256(authFormData.password).toString(crypto.enc.Hex);
 
 		const registerJsonData = {
 			key: authFormData.username,
