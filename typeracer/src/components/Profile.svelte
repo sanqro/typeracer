@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import TestDevelopmentChart from './TestDevelopmentChart.svelte';
+	import { checkAuth } from '$lib';
 
 	let userScores: any[] = [];
 	let averageWPM: number | null = null;
@@ -8,6 +9,7 @@
 	const username = localStorage.getItem('username') as string;
 
 	onMount(async () => {
+		checkAuth();
 		const token = localStorage.getItem('token') as string;
 		try {
 			if (token && username) {
