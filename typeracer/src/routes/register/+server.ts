@@ -19,7 +19,7 @@ export const POST = async ({ request }) => {
 
 		if (authFormData.password !== '' && authFormData.username !== '') {
 			auth.put({ username: authFormData.username, password: passwordHash });
-			return json({ token: token, success: true }, { status: 201 });
+			return json({ username: username, success: true }, { status: 201 });
 		} else {
 			return json({ message: 'Invalid Credentials', success: false }, { status: 401 });
 		}
