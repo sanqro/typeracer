@@ -1,10 +1,24 @@
-import { DETA_PROJECT_KEY } from '$env/static/private';
+import { DETA_PROJECT_KEY, JWT_SECRET } from '$env/static/private';
 import { Deta } from 'deta';
+import jose from 'jose';
 import type { ITypingTestScore } from './interfaces';
 import { json } from '@sveltejs/kit';
 
 const deta = Deta(DETA_PROJECT_KEY);
 const scoresDB = deta.Base('scores');
+
+const checkAuth = async (jwt: string, username: string) => {
+	const secretString = JWT_SECRET as string;
+	const secretBuffer = new TextEncoder().encode(secretString);
+
+	try {
+		const { payload } = await jose.jwtVerify(jwt, secretBuffer);
+		// paylod.sub is the username
+		return payload.sub === username;
+	} catch (error) {
+		return false;
+	}
+};
 
 export const POST = async ({ request }) => {
 	try {
