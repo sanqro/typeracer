@@ -27,6 +27,7 @@
 
 	const wordsUnsorted = words as string[];
 	const sortedWords: string[] = wordsUnsorted.sort(() => Math.random() - 0.5);
+
 	const startTimer = () => {
 		if (startTime === null && !showResults) {
 			startTime = new Date().getTime();
@@ -43,7 +44,30 @@
 		}
 	};
 
-	const finishTest = () => {
+	const finishTest = async () => {
+		const username = localStorage.getItem('username');
+		if (username) {
+			const response = await fetch('/scores', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					username: username,
+					elapsedTime: elapsedTime,
+					wpm: wpm,
+					errors: errors,
+					accuracy: accuracy,
+					testType: $testType
+				})
+			});
+			const res = await response.json();
+			if (res.success) {
+				console.log('Saved score successfully!');
+			} else {
+				alert(res.error);
+			}
+		}
 		showResults = true;
 	};
 
