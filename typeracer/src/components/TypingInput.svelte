@@ -24,6 +24,7 @@
 	let durationAsNumber = parseInt($duration);
 	let changeColor = false;
 	let awaitTimeout: any;
+	let interval: any;
 
 	const wordsUnsorted = words as string[];
 	const sortedWords: string[] = wordsUnsorted.sort(() => Math.random() - 0.5);
@@ -32,12 +33,13 @@
 		if (startTime === null && !showResults) {
 			startTime = new Date().getTime();
 			awaitTestEnd();
-			const interval = setInterval(() => {
+			interval = setInterval(() => {
 				if (!showResults) {
 					elapsedTime = Math.floor((new Date().getTime() - startTime!) / 1000);
 					wpm = calculateWPM(correctChars, elapsedTime);
 					accuracy = calculateAccuracy(correctChars, errors);
 				} else {
+					clearInterval(interval);
 					return 0;
 				}
 			}, 1000);
@@ -69,6 +71,27 @@
 			}
 		}
 		showResults = true;
+	};
+
+	const restartTest = () => {
+		currentWordIndex = 0;
+		userInput = '';
+		correctChars = 0;
+		errors = 0;
+		startTime = null;
+		elapsedTime = 0;
+		wpm = 0;
+		accuracy = 0;
+		showResults = false;
+		changeColor = false;
+		const wordsUnsorted = words as string[];
+		const sortedWords: string[] = wordsUnsorted.sort(() => Math.random() - 0.5);
+		stopTimer();
+	};
+
+	const stopTimer = () => {
+		clearInterval(interval);
+		startTime = null;
 	};
 
 	const awaitTestEnd = () => {
@@ -171,5 +194,10 @@
 				<p>Remaning time: {durationAsNumber - elapsedTime}</p>
 			{/if}
 		</section>
+	{/if}
+	{#if showResults}
+		<button on:click={restartTest} class="mt-4 p-2 bg-blue-500 text-white rounded"
+			>Restart Test</button
+		>
 	{/if}
 </div>
