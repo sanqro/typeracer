@@ -41,7 +41,7 @@
 		</table>
 	{:else}
 		<div class="bg-white p-4 rounded-lg shadow-md">
-			<p class="text-center text-gray-600">No data available yet.</p>
+			<p class="text-center text-black">No data available yet.</p>
 		</div>
 	{/if}
 </main>
