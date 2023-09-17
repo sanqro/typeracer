@@ -25,20 +25,44 @@
 	};
 </script>
 
-<div>
-	<h1>Register</h1>
-	<form on:submit={register}>
-		<div>
-			<label for="username">Username</label>
-			<input type="text" placeholder="Username" id="username" bind:value={username} required />
-		</div>
-		<div>
-			<label for="password">Password</label>
-			<input type="password" placeholder="Password" id="password" bind:value={password} required />
-		</div>
-		<div>
-			<p>Already have an account? <a href="/login">Login here</a></p>
-			<button type="submit">Register</button>
-		</div>
-	</form>
+<div class="w-full h-[80vh] flex items-center justify-center bg-gray-100">
+	<div class="w-70 max-w-md">
+		<h1 class="text-2xl font-bold mb-4">Register</h1>
+		<form on:submit={register} class="space-y-4">
+			<div class="flex flex-col">
+				<label for="username" class="mb-2 font-medium">Username</label>
+				<input
+					type="text"
+					placeholder="Username"
+					id="username"
+					bind:value={username}
+					required
+					class="border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400"
+				/>
+			</div>
+			<div class="flex flex-col">
+				<label for="password" class="mb-2 font-medium">Password</label>
+				<input
+					type="password"
+					placeholder="Password"
+					id="password"
+					bind:value={password}
+					required
+					class="border-gray-300 px-4 py-2 rounded-md border focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400"
+				/>
+			</div>
+			<div class="flex flex-col items-center space-y-4">
+				<p class="text-sm">
+					Already have an account? <a href="/login" class="text-blue-500 hover:underline"
+						>Login here</a
+					>
+				</p>
+				<button
+					type="submit"
+					class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
+					>Register</button
+				>
+			</div>
+		</form>
+	</div>
 </div>
