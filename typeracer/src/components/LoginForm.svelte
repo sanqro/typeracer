@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
+
 	let username = '';
 	let password = '';
 
@@ -16,6 +18,7 @@
 			if (res.success) {
 				localStorage.setItem('token', res.token);
 				localStorage.setItem('username', username);
+				goto('/');
 			} else {
 				alert(res.error);
 			}
@@ -35,6 +38,7 @@
 			<input type="password" placeholder="Password" id="password" bind:value={password} required />
 		</div>
 		<div>
+			<p>Don't have an account? <a href="/register">Register here</a></p>
 			<button type="submit">Login</button>
 		</div>
 	</form>
