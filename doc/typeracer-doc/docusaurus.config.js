@@ -1,25 +1,24 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
-const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Typeracer',
-  tagline: 'Typing is cool',
+  tagline: 'Teste deine Tippgeschwindigkeit!',
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://your-docusaurus-test-site.com',
+  url: 'https://docs.typeracer.sanqro.me',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'Sanqro, RelxOff', // Usually your GitHub org/user name.
-  projectName: 'Typeracer', // Usually your repo name.
+  organizationName: 'sanqro/typeracer', // Usually your GitHub org/user name.
+  projectName: 'typeracer', // Usually your repo name.
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -39,9 +38,10 @@ const config = {
       ({
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
-        },
-        blog: {
-          showReadingTime: true,
+          // Please change this to your repo.
+          // Remove this to remove the "edit this page" links.
+          editUrl:
+            'https://github.com/sanqro/typeracer/tree/master/doc/docs/Dokumentation.md',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
@@ -58,18 +58,13 @@ const config = {
       navbar: {
         title: 'Typeracer',
         logo: {
-          alt: 'Typeracer Logo',
+          alt: 'Logo',
           src: 'img/logo.svg',
         },
         items: [
+          { to: '/docs/Dokumentation', label: 'Dokumentation', position: 'left' },
           {
-            type: 'docSidebar',
-            sidebarId: 'tutorialSidebar',
-            position: 'left',
-            label: 'Typeracer Doc',
-          },
-          {
-            href: 'https://github.com/facebook/docusaurus',
+            href: 'https://github.com/sanqro/typeracer',
             label: 'GitHub',
             position: 'right',
           },
@@ -82,49 +77,44 @@ const config = {
             title: 'Docs',
             items: [
               {
-                label: 'Typescript Doc',
-                to: '/docs/doc',
+                label: 'Projektdokumentation',
+                to: '/docs/Dokumentation',
               },
             ],
           },
           {
-            title: 'Community',
+            title: 'Autoren',
             items: [
               {
-                label: 'Docusaurus Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+                label: 'sanqro',
+                href: 'https://github.com/sanqro/',
               },
               {
-                label: 'Docusaurus Discord',
-                href: 'https://discordapp.com/invite/docusaurus',
-              },
-              {
-                label: 'Docusaurus Twitter',
-                href: 'https://twitter.com/docusaurus',
+                label: 'RelxOff',
+                href: 'https://github.com/relxoff',
               },
             ],
           },
           {
-            title: 'More',
+            title: 'Mehr',
             items: [
               {
-                label: 'Docusaurus GitHub',
-                href: 'https://github.com/facebook/docusaurus',
-              },
-              {
-                label: 'Typeracer Github',
+                label: 'GitHub',
                 href: 'https://github.com/sanqro/typeracer',
+              },
+              {
+                label: 'Website',
+                href: 'https://typeracer.sanqro.me',
               },
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} Typeracer, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} sanqro/typeracer`,
       },
       prism: {
-        theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
       },
     }),
-}; 
+};
 
 module.exports = config;
