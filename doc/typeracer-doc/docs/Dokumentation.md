@@ -82,6 +82,7 @@ Für Typeracer verwenden wir folgende Technologien:
 - [Docusaurus](https://docusaurus.io/)
 - [Git](https://git-scm.com/doc)
 - [GitHub](https://docs.github.com/en)
+- [D3](https://d3js.org/)
 
 ### Hosts:
 
